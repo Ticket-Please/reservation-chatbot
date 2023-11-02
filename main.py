@@ -27,8 +27,8 @@ def 이름():
         "template":{
             "outputs":[
                 {
-                    "test_msg":{
-                        "test":"안녕하세용가리치킨"
+                    "simpleText":{
+                        "text":"안녕하세용가리치킨"
                     }
                 }
             ]
