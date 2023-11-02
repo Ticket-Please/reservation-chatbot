@@ -1,1 +1,5 @@
 secret.json
+venv/
+venv/Include/
+venv/Lib/site-packages
+venv/Scripts/
