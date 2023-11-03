@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from starlette.responses import JSONResponse
+from chatGPT.test import test_call
 
 app = FastAPI()
 
@@ -23,15 +24,19 @@ def 이름():
 @app.post("/test/kakao")
 def 이름():
     response = {
-        "version":"2.0",
-        "template":{
-            "outputs":[
+        "version": "2.0",
+        "template": {
+            "outputs": [
                 {
-                    "simpleText":{
-                        "text":"안녕하세용가리치킨"
+                    "simpleText": {
+                        "text": "안녕하세용가리치킨"
                     }
                 }
             ]
         }
     }
     return JSONResponse(response)
+
+@app.post('/chatgpt')
+def func():
+    return test_call()
