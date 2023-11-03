@@ -7,13 +7,29 @@ API_KEY = secrets["ChatGPT-key"]
 
 openai.api_key = API_KEY
 
+response = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": "안녕하세용가리치킨"
+                    }
+                }
+            ]
+        }
+    }
+
+
+
+
 def test_call():
-    prompt = "어르신들이 인터넷으로 기차예매를 할 수 있는 방법을 쉽게 설명해줘"
+    prompt = "기차 예매를 하는 방법을 쉽게 설명해줘"
 
     completion = openai.Completion.create(
-        engine="text-davinci-002",
+        model="text-davinci-003",
         prompt=prompt,
-        max_tokens=1024,
+        max_tokens=100,
         n=1,
         stop=None,
         temperature=0.5,
@@ -21,4 +37,5 @@ def test_call():
 
     message = completion.choices[0].text
     print(message)
-    return message
+    response["template"]["outputs"][0]["simpleText"]["text"] = message
+    return response
