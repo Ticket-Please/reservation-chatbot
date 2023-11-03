@@ -1,7 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from starlette.responses import JSONResponse
-from chatGPT.test import test_call
+from chatGPT.test import test_call, get_answer
 
 app = FastAPI()
 
@@ -40,3 +40,8 @@ def 이름():
 @app.post('/chatgpt')
 def func():
     return test_call()
+
+@app.post('/question')
+async def func(request: Request):
+    json_data = await request.json
+    return get_answer(json_data)
