@@ -42,8 +42,10 @@ def test_call():
 
 def get_answer(request_data):
     print(request_data)
-    params = request_data['userRequest']['utterance']
-    print(params)
+    message = request_data['userRequest']['utterance']
+    print(message)
+    response["template"]["outputs"][0]["simpleText"]["text"] = message
+    return response
 
     # prompt = request.get_data()
 
