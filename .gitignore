@@ -3,3 +3,4 @@ venv/
 venv/Include/
 venv/Lib/site-packages
 venv/Scripts/
+__pycache__/
