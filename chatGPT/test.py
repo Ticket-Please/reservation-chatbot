@@ -63,8 +63,8 @@ def get_answer(request_data):
     
 async def send_callback(callback_url: str, user_message: str):
     messages = [{'role':'user', 'content':user_message}]
-    
-    completion = await openai.ChatCompletion.create(
+
+    completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0613",
         messages=messages,
         max_tokens=200,
