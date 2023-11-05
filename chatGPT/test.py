@@ -1,6 +1,8 @@
 import json
 import openai
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
+import httpx
+import asyncio
 
 app = FastAPI()
 
@@ -22,11 +24,6 @@ response = {
             }
         ]
     }
-}
-
-response_callback = {
-    "version": "2.0",
-    "useCallback": True,
 }
 
 
@@ -53,35 +50,32 @@ def test_call():
 
 
 def get_answer(request_data):
-    callback_URL = request_data['userRequest']['callbackUrl']
-    prompt = request_data['userRequest']['utterance']
-    #messages = [{'role':'user', 'content':prompt}]
-    
-    # completion = await openai.ChatCompletion.create(
-    #     model="gpt-3.5-turbo-0613",
-    #     messages=messages,
-    #     max_tokens=200,
-    #     n=1,
-    #     stop=None,
-    #     temperature=0.5,
-    # )
+    user_message = request_data['userRequest']['utterance']
+    callback_url = request_data['userRequest']['callbackUrl']
 
-    # answer = completion['choices'][0]['message']['content']
-    # print(answer)
-    
-    #response["template"]["outputs"][0]["simpleText"]["text"] = "성공성공!"
-
+    response_callback = {
+        "version": "2.0",
+        "useCallback": True,
+    }
+    asyncio.create_task(send_callback(callback_url, user_message))  # 콜백 요청을 비동기적으로 보냄
     return response_callback
 
-    # @app.post(callback_URL)
-    #     async def func(request: response):
-    #         return response
-
-
-{
-  "version" : "2.0",
-  "useCallback" : True,
-  "data": {
-    "진짜성공"
-  }
-}
+    
+async def send_callback(callback_url: str, user_message: str):
+    messages = [{'role':'user', 'content':user_message}]
+    
+    completion = await openai.ChatCompletion.create(
+        model="gpt-3.5-turbo-0613",
+        messages=messages,
+        max_tokens=200,
+        n=1,
+        stop=None,
+        temperature=0.5,
+    )
+    gpt_answer = completion['choices'][0]['message']['content']
+    print(gpt_answer)
+    response["template"]["outputs"][0]["simpleText"]["text"] = gpt_answer
+    
+    # HTTP 클라이언트를 사용하여 비동기적으로 POST 요청을 보냄
+    async with httpx.AsyncClient() as client:
+        await client.post(callback_url, json=response)
