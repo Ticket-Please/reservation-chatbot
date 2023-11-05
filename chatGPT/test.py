@@ -24,36 +24,37 @@ response = {
 
 def test_call():
     prompt = "기차 예매를 하는 방법을 쉽게 설명해줘"
+    messages = [{'role':'user', 'content':prompt}]
 
-    completion = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
+    completion = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo-0613',
+        messages=messages,
         max_tokens=100,
         n=1,
         stop=None,
         temperature=0.5,
     )
 
-    message = completion.choices[0].text
-    print(message)
-    response["template"]["outputs"][0]["simpleText"]["text"] = message
+
+    response = completion['choices'][0]['message']['content']
+    print(response)
     return response
 
 
 def get_answer(request_data):
     prompt = request_data['userRequest']['utterance']
+    messages = [{'role':'user', 'content':prompt}]
     
-    completion = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo-0613",
+        messages=messages,
         max_tokens=200,
         n=1,
         stop=None,
         temperature=0.5,
     )
 
-    message = completion.choices[0].text
-    print(message)
-    response["template"]["outputs"][0]["simpleText"]["text"] = message
+    response = completion['choices'][0]['message']['content']
+    print(response)
     return response
 
