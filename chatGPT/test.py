@@ -1,6 +1,8 @@
 import json
 import openai
+from fastapi import FastAPI, Request
 
+app = FastAPI()
 
 with open('./secret.json') as f:
     secrets = json.loads(f.read())
@@ -20,6 +22,8 @@ response = {
         ]
     }
 }
+
+
 
 
 def test_call():
@@ -44,11 +48,12 @@ def test_call():
 
 
 
-def get_answer(request_data):
+async def get_answer(request_data):
+    callback_URL = request_data['userRequest']['callbackUrl']
     prompt = request_data['userRequest']['utterance']
     messages = [{'role':'user', 'content':prompt}]
     
-    completion = openai.ChatCompletion.create(
+    completion = await openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0613",
         messages=messages,
         max_tokens=200,
@@ -57,9 +62,23 @@ def get_answer(request_data):
         temperature=0.5,
     )
 
+
+
     answer = completion['choices'][0]['message']['content']
     print(answer)
     
     response["template"]["outputs"][0]["simpleText"]["text"] = answer
+
+    @app.post("callback_URL")
+    def func(request: Request):
+        callback_response = {
+                                "version" : "2.0",
+                                "useCallback" : True,
+                                "data": {
+                                    "text" : "생각하고 있는 중이에요😘 \n15초 정도 소요될 거 같아요 기다려 주실래요?!"
+                                }
+                            }
+        return callback_response
+    
     return response
 
