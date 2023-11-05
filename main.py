@@ -38,8 +38,9 @@ def 이름():
     return JSONResponse(response)
 
 @app.post('/chatgpt')
-def func():
-    return test_call()
+async def func(request: Request):
+    json_data = await request.json()
+    return test_call(json_data)
 
 
 @app.post('/question')
