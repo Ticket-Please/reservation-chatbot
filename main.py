@@ -41,7 +41,9 @@ def 이름():
 def func():
     return test_call()
 
+
 @app.post('/question')
 async def func(request: Request):
-    json_data = await request.json
+    json_data = await request.json()
     return get_answer(json_data)
+

@@ -41,24 +41,19 @@ def test_call():
 
 
 def get_answer(request_data):
-    print(request_data)
-    message = request_data['userRequest']['utterance']
+    prompt = request_data['userRequest']['utterance']
+    
+    completion = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        max_tokens=200,
+        n=1,
+        stop=None,
+        temperature=0.5,
+    )
+
+    message = completion.choices[0].text
     print(message)
     response["template"]["outputs"][0]["simpleText"]["text"] = message
     return response
 
-    # prompt = request.get_data()
-
-    # completion = openai.Completion.create(
-    #     model="text-davinci-003",
-    #     prompt=prompt,
-    #     max_tokens=100,
-    #     n=1,
-    #     stop=None,
-    #     temperature=0.5,
-    # )
-
-    # message = completion.choices[0].text
-    # print(message)
-    # response["template"]["outputs"][0]["simpleText"]["text"] = message
-    # return response
