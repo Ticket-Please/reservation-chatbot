@@ -36,9 +36,12 @@ def test_call():
     )
 
 
-    response = completion['choices'][0]['message']['content']
-    print(response)
+    answer = completion['choices'][0]['message']['content']
+    print(answer)
+
+    response["template"]["outputs"][0]["simpleText"]["text"] = answer
     return response
+
 
 
 def get_answer(request_data):
@@ -54,7 +57,9 @@ def get_answer(request_data):
         temperature=0.5,
     )
 
-    response = completion['choices'][0]['message']['content']
-    print(response)
+    answer = completion['choices'][0]['message']['content']
+    print(answer)
+    
+    response["template"]["outputs"][0]["simpleText"]["text"] = answer
     return response
 
