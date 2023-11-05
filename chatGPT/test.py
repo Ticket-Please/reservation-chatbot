@@ -52,30 +52,36 @@ def test_call():
 
 
 
-async def get_answer(request_data):
+def get_answer(request_data):
     callback_URL = request_data['userRequest']['callbackUrl']
     prompt = request_data['userRequest']['utterance']
-    messages = [{'role':'user', 'content':prompt}]
+    #messages = [{'role':'user', 'content':prompt}]
     
-    completion = await openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-0613",
-        messages=messages,
-        max_tokens=200,
-        n=1,
-        stop=None,
-        temperature=0.5,
-    )
+    # completion = await openai.ChatCompletion.create(
+    #     model="gpt-3.5-turbo-0613",
+    #     messages=messages,
+    #     max_tokens=200,
+    #     n=1,
+    #     stop=None,
+    #     temperature=0.5,
+    # )
 
-
-
-    answer = completion['choices'][0]['message']['content']
-    print(answer)
+    # answer = completion['choices'][0]['message']['content']
+    # print(answer)
     
-    response["template"]["outputs"][0]["simpleText"]["text"] = answer
+    #response["template"]["outputs"][0]["simpleText"]["text"] = "성공성공!"
 
-    @app.post(callback_URL)
-    async def func(request: Request):
-        return response
-    
-    return response
+    return response_callback
 
+    # @app.post(callback_URL)
+    #     async def func(request: response):
+    #         return response
+
+
+{
+  "version" : "2.0",
+  "useCallback" : True,
+  "data": {
+    "진짜성공"
+  }
+}
