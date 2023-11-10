@@ -1,0 +1,54 @@
+{
+    "dummyUserAPI" : {
+        "intent": {
+          "id": "0yftiobzj5rxkyyaqa00a5xt",
+          "name": "블록 이름"
+        },
+        "userRequest": {
+            "timezone": "Asia/Seoul",
+            "params": {
+            "ignoreMe": "true"
+            },
+            "block": {
+                "id": "0yftiobzj5rxkyyaqa00a5xt",
+                "name": "블록 이름"
+            },
+            "utterance": "발화 내용",
+            "lang": null,
+            "user": {
+                "id": "039168",
+                "type": "accountId",
+                "properties": {}
+            }
+        },
+        "bot": {
+            "id": "6520e618bb60a84fa206e6e2",
+            "name": "봇 이름"
+        },
+        "action": {
+            "name": "44vk3h84ap",
+            "clientExtra": null,
+            "params": {},
+            "id": "rrzbpyvpou6smfa05u4njpb9",
+            "detailParams": {}
+        }
+    },
+    
+    "response": {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": "안녕하세용가리치킨"
+                    }
+                }
+            ]
+        }
+    },
+
+    "response_callback": {
+        "version": "2.0",
+        "useCallback": true
+    }
+}
