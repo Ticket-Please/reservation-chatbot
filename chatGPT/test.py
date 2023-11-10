@@ -65,9 +65,11 @@ async def get_real_answer(request_data):
     for conversation in conversations:
         if conversationCount % 10 == 0:
             messages.append(role_message)
+        conversationCount += 1
         del conversation['_id']
         del conversation['user_id']
         messages.append(conversation)
+        
 
     # gpt답변 생성
     completion = openai.ChatCompletion.create(
