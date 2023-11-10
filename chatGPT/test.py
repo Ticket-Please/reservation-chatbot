@@ -57,9 +57,14 @@ async def get_real_answer(request_data):
     collection.insert_one({'user_id':user_id, 'role':'user', 'content':user_message})
 
     # DB에서 대화들 불러와 매개변수에 넣기
+    role_message = {"role": "system",
+                "content": "You are a capable assistant who finds and books suitable trains for the user."}
     messages = []
     conversations = collection.find({"user_id":user_id})
+    conversationCount = 0
     for conversation in conversations:
+        if conversationCount % 10 == 0:
+            messages.append(role_message)
         del conversation['_id']
         del conversation['user_id']
         messages.append(conversation)
