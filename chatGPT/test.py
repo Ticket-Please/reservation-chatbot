@@ -73,7 +73,7 @@ async def get_real_answer(request_data):
 
     # gpt답변 생성
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-0613",
+        model="gpt-4-0613",
         messages=messages,
         max_tokens=200,
         n=1,
