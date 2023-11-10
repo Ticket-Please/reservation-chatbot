@@ -59,10 +59,10 @@ async def get_real_answer(request_data):
     # DB에서 대화들 불러와 매개변수에 넣기
     messages = []
     conversations = collection.find({"user_id":user_id})
-    for converstaion in conversations:
-        del converstaion['_id']
-        print(converstaion)
-        messages.append(converstaion)
+    for conversation in conversations:
+        del conversation['_id']
+        del conversation['user_id']
+        messages.append(conversation)
 
     # gpt답변 생성
     completion = openai.ChatCompletion.create(
